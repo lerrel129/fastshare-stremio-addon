@@ -246,7 +246,7 @@ async function file_details(d_link) {
 
 async function search(query, video_details = true)
 {
-    //console.log("query: ", query)
+    console.log("query: ", query)
     html = await get_html(`https://fastshare.cloud/${query.replaceAll(" ", "-")}/s`)
     const match = html.toString().match(/id="search_token"\s*value="([^"]+)"/)
     const token = match ? match[1] : null
@@ -363,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
