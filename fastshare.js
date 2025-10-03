@@ -351,9 +351,6 @@ async function search(query, video_details = true)
 	        }
 	    }
 	}
-    const end = Date.now()
-    console.log("Trvanie:", (end - start)/1000, "ms")
-    //console.log("search-results:" + files)
     return files
 }
 
@@ -366,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
