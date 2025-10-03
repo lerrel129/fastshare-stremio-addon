@@ -377,6 +377,7 @@ async function search(query, video_details = true)
 	if (response.status == 200)
 	{
 		videos = response.data.items
+		console.log(response)
 		console.log(videos)
 		if (videos.length != 0) {
 	        for (const video of videos) {
@@ -418,6 +419,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
