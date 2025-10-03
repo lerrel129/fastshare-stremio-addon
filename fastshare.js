@@ -361,6 +361,7 @@ async function search(query, video_details = true)
 {
     //console.log("query: ", query)
 	let files = []
+	let videos = []
 	let url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
 	const response = await axios.get(url, {
 			  headers: 
@@ -375,7 +376,7 @@ async function search(query, video_details = true)
 			});
 	if (response.status == 200)
 	{
-		let videos = response.data.items
+		videos = response.data.items
 	}
 	else
 		console.log("response BAD")
@@ -415,6 +416,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
