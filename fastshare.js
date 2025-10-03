@@ -40,14 +40,14 @@ builder.defineStreamHandler(async function(args) {
     let streams = []
     if(args.id.startsWith("tt"))
     {
-        id = args.id.split(":")[0]
-        url = `https://api.themoviedb.org/3/find/${id}?api_key=a07324c669cac4d96789197134ce272b&external_source=imdb_id&language=sk-SK,cs-CS&append_to_response=credits,images,release_dates,videos`
-        response = await axios.get(url)
-        query = response.data?.movie_results[0]
+        let id = args.id.split(":")[0]
+        let url = `https://api.themoviedb.org/3/find/${id}?api_key=a07324c669cac4d96789197134ce272b&external_source=imdb_id&language=sk-SK,cs-CS&append_to_response=credits,images,release_dates,videos`
+        let response = await axios.get(url)
+        let query = response.data?.movie_results[0]
         ? `${response.data.movie_results[0].original_title} ${response.data.movie_results[0].release_date.substring(0, 4)}`
         : `${response.data.tv_results[0].name} s${args.id.split(":")[1].padStart(2, "0")}e${args.id.split(":")[2].padStart(2, "0")}`;
         //query = response.data?.movie_results[0] ? `${response.data.movie_results[0].title} ${response.data.movie_results[0].release_date.substring(0, 4)}` : `${response.data.tv_results[0].original_name} s${args.id.split(":")[1]}e${args.id.split(":")[2]}` 
-        files = await search(query, false)
+        let files = await search(query, false)
         streams = files.map(file => ({
             name:  `${file.resolution ? `📺${file.resolution.match(/x(\d+)/i)[1]}p  ` : "" }${file.size ? `💾${file.size}   ` : ""}`, //|| file.name,               // napr. 1080p, fallback na názov
             url: file.d_link,                                 // link na prehratie
@@ -363,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
