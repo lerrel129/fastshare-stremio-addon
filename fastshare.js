@@ -36,7 +36,7 @@ const builder = new addonBuilder({
 
 // takes function(args)
 builder.defineStreamHandler(async function(args) {
-    console.log("!!!!!defineStreamHandler: ", args)
+    //console.log("!!!!!defineStreamHandler: ", args)
     let streams = []
     if(args.id.startsWith("tt"))
     {
@@ -246,8 +246,8 @@ async function file_details(d_link) {
 
 async function search(query, video_details = true)
 {
-    console.log("query: ", query)
-    html = await get_html(`https://fastshare.cloud/${query.replaceAll(" ", "-")}/s`)
+    //console.log("query: ", query)
+    let html = await get_html(`https://fastshare.cloud/${query.replaceAll(" ", "-")}/s`)
     const match = html.toString().match(/id="search_token"\s*value="([^"]+)"/)
     const token = match ? match[1] : null
     let limit = 1
@@ -363,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
