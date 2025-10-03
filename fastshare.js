@@ -377,11 +377,8 @@ async function search(query, video_details = true)
 	if (response.status == 200)
 	{
 		videos = response.data.items
-	}
-	else
-		console.log("response BAD")
-	
-	    if (videos.length != 0) {
+		console.log(videos)
+		if (videos.length != 0) {
 	        for (const video of videos) {
 	            let audio = []
 	            audio.audio_stopy = ""
@@ -404,6 +401,11 @@ async function search(query, video_details = true)
 	            files.push(file)
 	        }
 	    }
+	}
+	else
+		console.log("response BAD")
+	
+	    
 	return files
 }
 
@@ -416,6 +418,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
