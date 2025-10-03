@@ -36,7 +36,7 @@ const builder = new addonBuilder({
 
 // takes function(args)
 builder.defineStreamHandler(async function(args) {
-    //console.log("!!!!!defineStreamHandler: ", args)
+    console.log("!!!!!defineStreamHandler: ", args)
     let streams = []
     if(args.id.startsWith("tt"))
     {
@@ -363,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
