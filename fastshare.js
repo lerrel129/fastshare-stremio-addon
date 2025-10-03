@@ -247,7 +247,7 @@ async function file_details(d_link) {
     return [video_props, audio_props]
 }
 
-async function search(query, video_details = true)
+//async function search(query, video_details = true)
 // {
 //     //console.log("query: ", query)
 // 	let files = []
@@ -416,6 +416,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
