@@ -380,7 +380,6 @@ async function search(query, video_details = true)
 	else
 		console.log("response BAD")
 	
-	let files = []
 	    if (videos.length != 0) {
 	        for (const video of videos) {
 	            let audio = []
@@ -416,6 +415,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
