@@ -366,7 +366,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
-url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
+let url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
 const response = await axios.get(url, {
 		  headers: 
 		  {
@@ -384,6 +384,7 @@ if (response.status == 200)
 }
 else
 	console.log("response BAD")
+
 
 
 
