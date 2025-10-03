@@ -362,9 +362,8 @@ async function search(query, video_details = true)
 // init()
 
 await login()
-export default (req, res) => {
-    //return serveHTTP(builder.getInterface())(req, res);}
-	serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });}
+serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
