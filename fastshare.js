@@ -147,6 +147,7 @@ async function login() {
 }
 
 async function get_html(url, addon_cookie) {
+    console.log(url)
     try {
         const headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
@@ -167,17 +168,19 @@ async function get_html(url, addon_cookie) {
         return response.data
 
     } catch (error) {
+        // ak je k dispozícii odpoveď servera
         if (error.response) {
-            // server odpovedal s chybovým kódom
-            console.error("get_html error:", error.message + error.response.status + error.response.statusText)
-            return null   // ⚠️ vracia null namiesto stringu
-            //return `${error.response.status} ${error.response.statusText}`
-        } else if (error.request) {
-            // request bol odoslaný, ale neprišla odpoveď
-            return "No response from server"
-        } else {
-            // iná chyba (napr. invalid URL)
-            return error.message
+            console.error("Status:", error.response.status, error.response.statusText);
+            console.error("Headers:", error.response.headers);
+            console.error("Data:", error.response.data);   // môže byť HTML alebo JSON
+        } 
+        // ak bol odoslaný request ale neprišla odpoveď
+        else if (error.request) {
+            console.error("No response received. Request:", error.request);
+        } 
+        // iná chyba (napr. chyba v konfigurácii)
+        else {
+            console.error("Other error:", error);
         }
     }
 }
@@ -363,6 +366,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
