@@ -404,7 +404,7 @@ async function search(query, video_details = true)
 	            files.push(file)
 	        }
 	    }
-	    return files
+	return files
 }
 
 // // Najskôr login, potom spustenie servera
@@ -416,6 +416,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
