@@ -375,7 +375,7 @@ async function search(query, video_details = true)
 			});
 	if (response.status == 200)
 	{
-		videos = response.data.items
+		let videos = response.data.items
 	}
 	else
 		console.log("response BAD")
@@ -415,6 +415,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
