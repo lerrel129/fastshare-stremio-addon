@@ -169,7 +169,7 @@ async function get_html(url, addon_cookie) {
     } catch (error) {
         if (error.response) {
             // server odpovedal s chybovým kódom
-            console.error("get_html error:", error.message + error.response)
+            console.error("get_html error:", error.message + error.response.status + error.response.statusText)
             return null   // ⚠️ vracia null namiesto stringu
             //return `${error.response.status} ${error.response.statusText}`
         } else if (error.request) {
@@ -363,6 +363,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+
 
 
 
