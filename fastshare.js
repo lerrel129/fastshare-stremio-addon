@@ -378,12 +378,13 @@ const response = await axios.get(url, {
 			  "Connection": "keep-alive"
 		  }
 		});
-	if (response.status == 200)
-	{
-		console.log("response OK")
-	}
-	else
-		console.log("response BAD")
+if (response.status == 200)
+{
+	console.log("response OK")
+}
+else
+	console.log("response BAD")
+
 
 
 
