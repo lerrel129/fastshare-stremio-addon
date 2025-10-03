@@ -248,113 +248,163 @@ async function file_details(d_link) {
 }
 
 async function search(query, video_details = true)
+// {
+//     //console.log("query: ", query)
+// 	let files = []
+//     let html = await get_html(`https://fastshare.cloud/${query.replaceAll(" ", "-")}/s`)
+// 	if (!html && html != null) 
+// 	{
+// 		console.log(html)
+// 	    const match = html.toString().match(/id="search_token"\s*value="([^"]+)"/)
+// 	    const token = match ? match[1] : null
+// 	    let limit = 1
+// 	    let items = []
+// 	    while (true) {
+// 	        url =   `https://fastshare.cloud/test2.php?` +
+// 	                `token=${token}&` +
+// 	                `&search_purpose=0&search_resolution=0&order=&type=video` +
+// 	                `&term=${make_term(query)}&plain_search=0&limit=${limit}&step=3`
+	        
+// 	        html = await get_html(url, addon_cookie)
+// 	        const regex = /<li\b[^>]*>([\s\S]*?)<\/li>/gi
+// 	        const new_items = [...html.matchAll(regex)].map(m => m[1])
+	
+// 	        if (new_items.length==0)
+// 	            break
+// 	        else
+// 	        {
+// 	            items = items.concat(new_items)
+// 	            limit+=9
+// 	        }
+// 	    }
+// 	    const start = Date.now()
+// 	    if (!items[0]?.includes("nebylo nic nalezeno") && items.length != 0) {
+// 	        for (const li of items) {
+// 	            // názov súboru
+// 	            let fileNameMatch = li.match(/<div[^>]*class="video_detail"[^>]*>.*?<p[^>]*>\s*<a[^>]*>(.*?)<\/a>/is)
+// 	            let file_name = fileNameMatch ? fileNameMatch[1].trim() : "(NO NAME)"
+// 	            let file_name_lower = file_name.toLowerCase()
+	
+// 	            let audio = []
+// 	            audio.audio_stopy = ""
+// 	            let video = []
+// 	            video.titulky = ""
+// 	            if ((file_name_lower.includes("sk") || file_name_lower.includes("sl")) && !file_name_lower.includes("česk") && !file_name_lower.includes("cesk")) 
+// 	                audio.audio_stopy = "SK"
+// 			    if (file_name_lower.includes("cz") || file_name_lower.includes("cs") || file_name_lower.includes("český") || file_name_lower.includes("cesky")) 
+// 	                audio.audio_stopy = audio.audio_stopy? audio.audio_stopy + " CZ" : "CZ"
+// 	            // if (file_name_lower.includes("en") || file_name_lower.includes("eng") || file_name_lower.includes("english") || file_name_lower.includes("cesky")) 
+// 	            //     audio.audio_stopy = audio.audio_stopy? audio.audio_stopy + " EN" : "EN"
+	
+// 	            // rýchle stiahnutie link
+// 	            let dlMatch = li.match(/<a[^>]*href=["']([^"']+)["'][^>]*title=["']Rychlé stažení["']/i)
+// 	            let dl_href = dlMatch ? dlMatch[1].trim() : null
+	
+// 	            // detaily videa
+// 	            let video_detail_matches = [...li.matchAll(/<span[^>]*class="[^"]*\bvideo_time\b[^"]*"[^>]*>(.*?)<\/span>/gis)].map(m => m[1])
+// 	            let durationMatch = video_detail_matches.length > 0 ? video_detail_matches[0].match(/(\d{1,2}:\d{2}:\d{2})/) : null
+// 	            let duration = durationMatch ? durationMatch[1] : null
+// 	            let resolution = video_detail_matches.length > 1 ? video_detail_matches[1].trim().split(";").pop().trim() : null
+// 	            let size = video_detail_matches.length > 3 ? video_detail_matches[3].trim() :
+// 	            video_detail_matches.length > 2 ? video_detail_matches[2].trim() : null
+	
+// 	            // odkaz a thumbnail
+// 	            let aMatch = li.match(
+// 	                /<div[^>]*class="[^"]*\bvideo\b[^"]*"[^>]*>\s*<a[^>]*href=([^\s>]+)[^>]*>\s*<img[^>]*src=["']([^"']+)["']/is
+// 	            )
+// 	            let d_link = aMatch ? aMatch[1].trim() : null
+// 	            let img_src = aMatch ? aMatch[2].trim() : null
+	
+// 	            // načítanie detailov videa
+// 	            //video, audio = details? await file_details(d_link): video, audio
+// 	            if (video_details == true)
+// 	            {
+// 	                details = await file_details(d_link)
+// 	                audio_details = details[1]?.audio_stopy? details[1].audio_stopy.split(" ") : null
+// 	                if (audio_details != null)
+// 	                    for (const lang of audio_details) {
+// 	                        if (!audio.audio_stopy.includes(lang)) {
+// 	                            // ak tam ešte nie je, pridaj
+// 	                            audio.audio_stopy += (audio.audio_stopy ? " " : "") + lang
+// 	                        }
+// 	                    }
+// 	                //audio.audio_stopy += details[1]?.audio_stopy? " " + details[1].audio_stopy : ""
+// 	                video_details = details[0]?.titulky? details[0].titulky.split(" ") : null
+// 	                if (video_details != null)
+// 	                    for (const lang of video_details) {
+// 	                        if (!video.titulky.includes(lang)) {
+// 	                            // ak tam ešte nie je, pridaj
+// 	                            video.titulky += (video.titulky ? " " : "") + lang
+// 	                        }
+// 	                    }
+// 	                video.titulky += details[0]?.titulky? details[0].titulky : ""
+// 	            }
+	
+// 	            let file = {
+// 	                name: file_name,
+// 	                size: size,
+// 	                duration: duration,
+// 	                resolution: resolution,
+// 	                thumbnail: img_src,
+// 	                d_link: dl_href,
+// 	                video: video,
+// 	                audio: audio
+// 	            }
+// 	            files.push(file)
+// 	        }
+// 	    }
+// 	}
+//     return files
+// }
+
+async function search(query, video_details = true)
 {
     //console.log("query: ", query)
 	let files = []
-    let html = await get_html(`https://fastshare.cloud/${query.replaceAll(" ", "-")}/s`)
-	if (!html && html != null) 
+	let url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
+	const response = await axios.get(url, {
+			  headers: 
+			  {
+				  "User-Agent":
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+				  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+				  "Accept-Language": "en-US,en;q=0.9,sk;q=0.8",
+				  "Referer": "https://fastshare.cz/",
+				  "Connection": "keep-alive"
+			  }
+			});
+	if (response.status == 200)
 	{
-		console.log(html)
-	    const match = html.toString().match(/id="search_token"\s*value="([^"]+)"/)
-	    const token = match ? match[1] : null
-	    let limit = 1
-	    let items = []
-	    while (true) {
-	        url =   `https://fastshare.cloud/test2.php?` +
-	                `token=${token}&` +
-	                `&search_purpose=0&search_resolution=0&order=&type=video` +
-	                `&term=${make_term(query)}&plain_search=0&limit=${limit}&step=3`
-	        
-	        html = await get_html(url, addon_cookie)
-	        const regex = /<li\b[^>]*>([\s\S]*?)<\/li>/gi
-	        const new_items = [...html.matchAll(regex)].map(m => m[1])
+		videos = response.data.items
+	}
+	else
+		console.log("response BAD")
 	
-	        if (new_items.length==0)
-	            break
-	        else
-	        {
-	            items = items.concat(new_items)
-	            limit+=9
-	        }
-	    }
-	    const start = Date.now()
-	    if (!items[0]?.includes("nebylo nic nalezeno") && items.length != 0) {
-	        for (const li of items) {
-	            // názov súboru
-	            let fileNameMatch = li.match(/<div[^>]*class="video_detail"[^>]*>.*?<p[^>]*>\s*<a[^>]*>(.*?)<\/a>/is)
-	            let file_name = fileNameMatch ? fileNameMatch[1].trim() : "(NO NAME)"
-	            let file_name_lower = file_name.toLowerCase()
-	
+	let files = []
+	    if (videos.length != 0) {
+	        for (const video of videos) {
 	            let audio = []
 	            audio.audio_stopy = ""
-	            let video = []
-	            video.titulky = ""
-	            if ((file_name_lower.includes("sk") || file_name_lower.includes("sl")) && !file_name_lower.includes("česk") && !file_name_lower.includes("cesk")) 
+	            video_title_lower = video.title.toLowerCase()
+	            if (video_title_lower.includes("sk") && !video_title_lower.includes("česk") && !video_title_lower.includes("cesk")) 
 	                audio.audio_stopy = "SK"
-			    if (file_name_lower.includes("cz") || file_name_lower.includes("cs") || file_name_lower.includes("český") || file_name_lower.includes("cesky")) 
+			    if (video_title_lower.includes("cz") || video_title_lower.includes("cs") || video_title_lower.includes("český") || video_title_lower.includes("cesky")) 
 	                audio.audio_stopy = audio.audio_stopy? audio.audio_stopy + " CZ" : "CZ"
-	            // if (file_name_lower.includes("en") || file_name_lower.includes("eng") || file_name_lower.includes("english") || file_name_lower.includes("cesky")) 
-	            //     audio.audio_stopy = audio.audio_stopy? audio.audio_stopy + " EN" : "EN"
 	
-	            // rýchle stiahnutie link
-	            let dlMatch = li.match(/<a[^>]*href=["']([^"']+)["'][^>]*title=["']Rychlé stažení["']/i)
-	            let dl_href = dlMatch ? dlMatch[1].trim() : null
-	
-	            // detaily videa
-	            let video_detail_matches = [...li.matchAll(/<span[^>]*class="[^"]*\bvideo_time\b[^"]*"[^>]*>(.*?)<\/span>/gis)].map(m => m[1])
-	            let durationMatch = video_detail_matches.length > 0 ? video_detail_matches[0].match(/(\d{1,2}:\d{2}:\d{2})/) : null
-	            let duration = durationMatch ? durationMatch[1] : null
-	            let resolution = video_detail_matches.length > 1 ? video_detail_matches[1].trim().split(";").pop().trim() : null
-	            let size = video_detail_matches.length > 3 ? video_detail_matches[3].trim() :
-	            video_detail_matches.length > 2 ? video_detail_matches[2].trim() : null
-	
-	            // odkaz a thumbnail
-	            let aMatch = li.match(
-	                /<div[^>]*class="[^"]*\bvideo\b[^"]*"[^>]*>\s*<a[^>]*href=([^\s>]+)[^>]*>\s*<img[^>]*src=["']([^"']+)["']/is
-	            )
-	            let d_link = aMatch ? aMatch[1].trim() : null
-	            let img_src = aMatch ? aMatch[2].trim() : null
-	
-	            // načítanie detailov videa
-	            //video, audio = details? await file_details(d_link): video, audio
-	            if (video_details == true)
-	            {
-	                details = await file_details(d_link)
-	                audio_details = details[1]?.audio_stopy? details[1].audio_stopy.split(" ") : null
-	                if (audio_details != null)
-	                    for (const lang of audio_details) {
-	                        if (!audio.audio_stopy.includes(lang)) {
-	                            // ak tam ešte nie je, pridaj
-	                            audio.audio_stopy += (audio.audio_stopy ? " " : "") + lang
-	                        }
-	                    }
-	                //audio.audio_stopy += details[1]?.audio_stopy? " " + details[1].audio_stopy : ""
-	                video_details = details[0]?.titulky? details[0].titulky.split(" ") : null
-	                if (video_details != null)
-	                    for (const lang of video_details) {
-	                        if (!video.titulky.includes(lang)) {
-	                            // ak tam ešte nie je, pridaj
-	                            video.titulky += (video.titulky ? " " : "") + lang
-	                        }
-	                    }
-	                video.titulky += details[0]?.titulky? details[0].titulky : ""
-	            }
-	
+	            objectType = video.objectType.toLowerCase()
 	            let file = {
-	                name: file_name,
-	                size: size,
-	                duration: duration,
-	                resolution: resolution,
-	                thumbnail: img_src,
-	                d_link: dl_href,
-	                video: video,
+	                name: video.title,
+	                size: `${(video.size / (1024 ** 3)).toFixed(2)} GB`,
+	                duration: `${Math.floor(video.duration / 3600)}h ${Math.floor((video.duration % 3600) / 60)}m`,
+	                //resolution: resolution,
+	                thumbnail: video.thumbs[0],
+	                d_link: `https://api.hellspy.to/${objectType.substring(0, 2)}/${objectType.slice(-5)}/${video.id}/${video.fileHash}/download`,
 	                audio: audio
 	            }
 	            files.push(file)
 	        }
 	    }
-	}
-    return files
+	    return files
 }
 
 // // Najskôr login, potom spustenie servera
@@ -366,24 +416,7 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
-let url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
-const response = await axios.get(url, {
-		  headers: 
-		  {
-			  "User-Agent":
-				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
-			  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-			  "Accept-Language": "en-US,en;q=0.9,sk;q=0.8",
-			  "Referer": "https://fastshare.cz/",
-			  "Connection": "keep-alive"
-		  }
-		});
-if (response.status == 200)
-{
-	console.log("response OK")
-}
-else
-	console.log("response BAD")
+
 
 
 
