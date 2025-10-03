@@ -366,6 +366,25 @@ async function search(query, video_details = true)
 
 await login()
 serveHTTP(builder.getInterface(), { port: process.env.PORT || 7000 });
+url = "https://fastshare.cz/api/api_kodi.php?process=search&term=sonic"
+const response = await axios.get(url, {
+		  headers: 
+		  {
+			  "User-Agent":
+				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+			  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+			  "Accept-Language": "en-US,en;q=0.9,sk;q=0.8",
+			  "Referer": "https://fastshare.cz/",
+			  "Connection": "keep-alive"
+		  }
+		});
+	if (response.status == 200)
+	{
+		console.log("response OK")
+	}
+	else
+		console.log("response BAD")
+
 
 
 
